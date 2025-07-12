@@ -13,7 +13,7 @@ const Footer = ({ onNavigate }) => {
         padding: '0.6rem 1rem',
         borderTop: '1px solid #222',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         zIndex: 1000,
       }}
@@ -22,19 +22,23 @@ const Footer = ({ onNavigate }) => {
         <FaHome size={22} />
         <span style={labelStyle}>Home</span>
       </button>
+
       <button onClick={() => onNavigate('search')} style={navItemStyle}>
         <FaSearch size={22} />
         <span style={labelStyle}>Search</span>
       </button>
-      <button style={navItemStyle}>
+
+      <button onClick={() => alert('Add functionality coming soon!')} style={navItemStyle}>
         <FaPlusSquare size={22} />
         <span style={labelStyle}>Add</span>
       </button>
-      <button style={navItemStyle}>
+
+      <button onClick={() => onNavigate('reels')} style={navItemStyle}>
         <BsCameraReelsFill size={22} />
         <span style={labelStyle}>Reels</span>
       </button>
-      <button style={navItemStyle}>
+
+      <button onClick={() => alert('Profile functionality coming soon!')} style={navItemStyle}>
         <FaUser size={22} />
         <span style={labelStyle}>Profile</span>
       </button>
