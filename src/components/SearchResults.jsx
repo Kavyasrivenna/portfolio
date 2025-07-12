@@ -5,24 +5,25 @@ import Skills from './skills';
 import Certificates from './Certificates';
 import Projects from './Projects';
 import Contact from './contact';
+import Experience from './Experience';
 
-const SearchResults = ({ query }) => {
-  const sectionMap = {
-    home: <Home />,
-    about: <About />,
-    skills: <Skills />,
-    certifications: <Certificates />,
-    projects: <Projects />,
-    contact: <Contact />,
-  };
+const sectionMap = {
+  home: <Home />,
+  about: <About />,
+  skills: <Skills />,
+  certificates: <Certificates />,
+  projects: <Projects />,
+  contact: <Contact />,
+  experience: <Experience />
+};
 
-  const result = sectionMap[query];
-
+const SearchResult = ({ query }) => {
+  const result = sectionMap[query.toLowerCase()];
   return (
-    <div>
-      {result ? result : <p style={{ textAlign: 'center' }}>No section found.</p>}
+    <div style={{ padding: '1rem', color: 'white' }}>
+      {result || <p>No section found for "{query}"</p>}
     </div>
   );
 };
 
-export default SearchResults;
+export default SearchResult;
