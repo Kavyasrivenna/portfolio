@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset + Base styles */
 * {
   margin: 0;
@@ -157,4 +161,7 @@ footer {
   background-color: #f3f3f3;
   font-size: 0.9rem;
   color: #555;
+}
+html, body {
+  overflow-x: hidden;
 }

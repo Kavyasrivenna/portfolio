@@ -38,7 +38,7 @@ const Footer = ({ onNavigate }) => {
         <span style={labelStyle}>Reels</span>
       </button>
 
-      <button onClick={() => alert('Profile functionality coming soon!')} style={navItemStyle}>
+      <button onClick={() => onNavigate('profile')} style={navItemStyle}>
         <FaUser size={22} />
         <span style={labelStyle}>Profile</span>
       </button>

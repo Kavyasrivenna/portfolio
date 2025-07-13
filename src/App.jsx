@@ -13,24 +13,26 @@ import Footer from './components/footer';
 import StoryCard from './components/storycard';
 import SearchBar from './components/SearchBar';
 import PortfolioGrid from './components/PortfolioGrid';
+import ReelsViewer from './components/ReelsViewer';
+import Profile from './components/profile'; // ✅ Import Profile
 
 function App() {
   const [showStory, setShowStory] = useState(false);
-  const [activePage, setActivePage] = useState('main'); // "main" or "search"
+  const [activePage, setActivePage] = useState('main'); // main | search | reels | profile
 
   const closeStory = () => setShowStory(false);
 
   return (
     <div style={{ backgroundColor: '#000', color: '#fff' }}>
-      {/* Navbar only shown on main page */}
+      {/* Navbar only on main page */}
       {activePage === 'main' && <Navbar />}
-      
-      {/* Story navigation only on main page */}
+
+      {/* Story Navigation only on main page */}
       {activePage === 'main' && (
         <StoryNavigation onStoryClick={() => setShowStory(true)} />
       )}
 
-      {/* Show story overlay */}
+      {/* Story Modal */}
       {showStory && (
         <div style={overlayStyle} onClick={closeStory}>
           <div
@@ -43,12 +45,16 @@ function App() {
         </div>
       )}
 
-      {/* Content switch based on activePage */}
+      {/* Route-based content */}
       {activePage === 'search' ? (
         <>
           <SearchBar />
           <PortfolioGrid />
         </>
+      ) : activePage === 'reels' ? (
+        <ReelsViewer />
+      ) : activePage === 'profile' ? (
+        <Profile /> // ✅ Renders your Instagram-style profile UI
       ) : (
         <>
           <Home />
@@ -62,19 +68,22 @@ function App() {
         </>
       )}
 
-      {/* Footer always shown and handles navigation */}
-      <Footer onNavigate={(page) => {
-        setActivePage(page);
-        setShowStory(false); // Close story when switching pages
-      }} />
+      {/* Footer always visible */}
+      <Footer
+        onNavigate={(page) => {
+          setActivePage(page);
+          setShowStory(false); // Hide story viewer if open
+        }}
+      />
     </div>
   );
 }
 
-// Styles
+// Styles for story overlay
 const overlayStyle = {
   position: 'fixed',
-  top: 0, left: 0,
+  top: 0,
+  left: 0,
   width: '100vw',
   height: '100vh',
   backgroundColor: 'rgba(0, 0, 0, 0.95)',

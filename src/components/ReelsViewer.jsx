@@ -1,88 +1,114 @@
-import React, { useState, useRef, useEffect } from 'react';
+// src/components/ReelsViewer.jsx
+import React, { useEffect, useRef, useState } from 'react';
+import reelsData from './ReelsData';
 import ReelItem from './ReelItem';
-import { reelsData } from '../data/reelsData';
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 const ReelsViewer = () => {
-  const [index, setIndex] = useState(0);
-  const containerRef = useRef(null);
-  const touchStartY = useRef(null);
-  const touchEndY = useRef(null);
-  const progressRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [showArrows, setShowArrows] = useState(true);
 
-  const nextReel = () => {
-    if (index < reelsData.length - 1) setIndex(index + 1);
+  const containerRef = useRef(null);
+  const arrowTimeoutRef = useRef(null);
+
+  const toggleMute = () => setIsMuted((prev) => !prev);
+  const togglePlayPause = () => setIsPlaying((prev) => !prev);
+
+  const resetArrowTimer = () => {
+    setShowArrows(true);
+    clearTimeout(arrowTimeoutRef.current);
+    arrowTimeoutRef.current = setTimeout(() => setShowArrows(false), 3000);
+  };
+
+  const scrollToIndex = (index) => {
+    if (containerRef.current && containerRef.current.children[index]) {
+      containerRef.current.children[index].scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const prevReel = () => {
-    if (index > 0) setIndex(index - 1);
-  };
-
-  // Wheel support (desktop)
-  const handleScroll = (e) => {
-    if (e.deltaY > 0) nextReel();
-    else prevReel();
-  };
-
-  // Touch support (mobile)
-  const handleTouchStart = (e) => {
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchEnd = (e) => {
-    touchEndY.current = e.changedTouches[0].clientY;
-    const distance = touchStartY.current - touchEndY.current;
-    if (distance > 50) nextReel();     // swipe up
-    if (distance < -50) prevReel();    // swipe down
-  };
-
-  // Progress bar animation
-  useEffect(() => {
-    if (progressRef.current) {
-      progressRef.current.style.width = '0%';
-      progressRef.current.offsetHeight; // force reflow
-      progressRef.current.style.transition = 'width 4s linear';
-      progressRef.current.style.width = '100%';
-
-      const timer = setTimeout(() => {
-        nextReel();
-      }, 4000);
-
-      return () => clearTimeout(timer);
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+      scrollToIndex(currentIndex - 1);
     }
-  }, [index]);
+  };
+
+  const nextReel = () => {
+    if (currentIndex < reelsData.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+      scrollToIndex(currentIndex + 1);
+    }
+  };
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const children = Array.from(containerRef.current.children);
+      const scrollTop = containerRef.current.scrollTop;
+      const childHeight = window.innerHeight;
+      const index = Math.round(scrollTop / childHeight);
+      setCurrentIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    resetArrowTimer();
+    const handleUserInteraction = () => resetArrowTimer();
+
+    window.addEventListener('click', handleUserInteraction);
+    window.addEventListener('touchstart', handleUserInteraction);
+    window.addEventListener('keydown', handleUserInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleUserInteraction);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+      clearTimeout(arrowTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <div
       ref={containerRef}
-      onWheel={handleScroll}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      className="h-screen w-full overflow-hidden relative"
+      onScroll={handleScroll}
+      className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-black relative"
     >
-      {/* Reels Container */}
-      <div
-        className="transition-transform duration-500"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
-      >
-        {reelsData.map((item, i) => (
-          <ReelItem key={i} item={item} />
-        ))}
-      </div>
+      {reelsData.map((reel, index) => (
+        <div
+          key={index}
+          className="snap-start flex justify-center items-center h-screen w-full"
+        >
+          <div className="w-full max-w-[420px] h-full flex items-center justify-center">
+            <ReelItem
+              reel={reel}
+              isActive={index === currentIndex}
+              isMuted={isMuted}
+              isPlaying={isPlaying}
+              toggleMute={toggleMute}
+              onPlayPauseToggle={togglePlayPause}
+            />
+          </div>
+        </div>
+      ))}
 
-      {/* Dot Indicators */}
-      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-        {reelsData.map((_, i) => (
-          <span
-            key={i}
-            className={`w-2 h-2 rounded-full ${i === index ? 'bg-white' : 'bg-gray-500'} transition-all`}
-          />
-        ))}
-      </div>
-
-      {/* Progress Bar */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-black z-10">
-        <div ref={progressRef} className="h-full bg-white transition-all" />
-      </div>
+      {/* Arrow Buttons */}
+      {showArrows && (
+        <div className="absolute z-30 right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-4 transition-opacity duration-500">
+          <button
+            onClick={prevReel}
+            className="bg-white text-black p-3 rounded-full shadow hover:bg-gray-200"
+          >
+            <FaArrowUp className="text-xl" />
+          </button>
+          <button
+            onClick={nextReel}
+            className="bg-white text-black p-3 rounded-full shadow hover:bg-gray-200"
+          >
+            <FaArrowDown className="text-xl" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
