@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Navbar from './components/navbar';
+
+import Navbar from './components/Navbar';
 import StoryNavigation from './components/StoryNavigation';
 import Home from './components/home';
 import About from './components/about';
@@ -8,13 +9,13 @@ import Education from './components/Education';
 import Experience from './components/Experience';
 import Certification from './components/Certification';
 import Projects from './components/Projects';
-import Contact from './components/contact';
+import Contact from './components/Contact';
 import Footer from './components/footer';
 import StoryCard from './components/storycard';
 import SearchBar from './components/SearchBar';
 import PortfolioGrid from './components/PortfolioGrid';
 import ReelsViewer from './components/ReelsViewer';
-import Profile from './components/profile'; // ✅ Import Profile
+import Profile from './components/Profile';
 
 function App() {
   const [showStory, setShowStory] = useState(false);
@@ -45,7 +46,7 @@ function App() {
         </div>
       )}
 
-      {/* Route-based content */}
+      {/* Page content */}
       {activePage === 'search' ? (
         <>
           <SearchBar />
@@ -54,7 +55,7 @@ function App() {
       ) : activePage === 'reels' ? (
         <ReelsViewer />
       ) : activePage === 'profile' ? (
-        <Profile /> // ✅ Renders your Instagram-style profile UI
+        <Profile />
       ) : (
         <>
           <Home />
@@ -68,18 +69,18 @@ function App() {
         </>
       )}
 
-      {/* Footer always visible */}
+      {/* Footer */}
       <Footer
         onNavigate={(page) => {
           setActivePage(page);
-          setShowStory(false); // Hide story viewer if open
+          setShowStory(false);
         }}
       />
     </div>
   );
 }
 
-// Styles for story overlay
+/* Styles */
 const overlayStyle = {
   position: 'fixed',
   top: 0,

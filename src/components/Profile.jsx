@@ -2,113 +2,252 @@ import React, { useState, useEffect } from "react";
 import profileImg from "../assets/1.jpg";
 import mentorImage from "../assets/5.jpg.png"; // Mentorship image
 
-const tabs = ["Projects", "About", "Experience", "Education", "Certifications", "Soft Skills"];
+const tabs = [
+  "About",
+  "Projects",
+  "Experience",
+  "Education",
+  "Certifications",
+  "Achievements",
+  "Soft Skills",
+];
+
+// Certificates data for grid layout
+const certificateList = [
+  {
+    title: "High Impact Presentations",
+    link: "https://drive.google.com/file/d/17bNDk8Ycb-bgwq0P_xswHDRB2FfRueoG/view?usp=sharing",
+  },
+  {
+    title: "JavaScript",
+    link: "https://drive.google.com/file/d/1KxG0wL4fU6_28nhboyZs-Ecv0BnitkOW/view?usp=sharing",
+  },
+  {
+    title: "HTML-5: The Language",
+    link: "https://drive.google.com/file/d/12pCjwlV8MXxJkGLA8uOLbFexzWjWvGeo/view?usp=sharing",
+  },
+  {
+    title: "Website Creation",
+    link: "https://drive.google.com/file/d/1jxQmBu0QuRf_aYI1mMxxyToAo9APEFDc/view?usp=sharing",
+  },
+  {
+    title: "Time Management",
+    link: "https://drive.google.com/file/d/1_6_5-RYiHA0hqei8dY0GwoXTM_bdpWI_/view?usp=sharing",
+  },
+  {
+    title: "Creating Responsive Web Pages using Bootstrap",
+    link: "https://drive.google.com/file/d/1Y-uwt4pH2XBsmE3TvPVeCb8noNxYpeFQ/view?usp=sharing",
+  },
+  {
+    title: "Angular Web Development Certification",
+    link: "https://drive.google.com/file/d/1qCc9rjWa6EdOPdZIKLP9Vgbs6CfSi-cd/view?usp=sharing",
+  },
+  {
+    title: "Google Cloud Skills Boost",
+    link: "https://www.cloudskillsboost.google/public_profiles/ec48ebe2-2463-4e4d-9093-0717e4636c45",
+  },
+  {
+    title: "Web Development Certificate",
+    link: "https://drive.google.com/file/d/1ZXe4OH3DyavVYa_UU1ynWw3GRO4sb6T8/view?usp=sharing",
+  },
+];
 
 const tabContents = {
-  Projects: `
-1. CodePen Clone  
-A real-time HTML/CSS/JS code editor inspired by CodePen, with live preview and responsive layout.  
-🔗 GitHub: https://github.com/Kavyasrivenna/codepen
+  About: (
+    <div style={{ fontSize: "1rem", lineHeight: "1.6", color: "#ccc" }}>
+      <p>
+        Hello! I'm <strong>Kavya Sri Venna</strong>, a Computer Science undergraduate (2023–2027) at VNR Vignana Jyothi Institute of Engineering and Technology.
+      </p>
+      <p>
+        I'm an enthusiastic and detail-oriented Full Stack Developer passionate about building scalable, user-friendly applications. I enjoy problem-solving, open-source contributions, and creating impactful software.
+      </p>
+      <p>
+        <strong>Objective:</strong> Seeking opportunities to apply my technical and analytical skills to real-world projects while continuing to learn and grow.
+      </p>
+      <p>
+        <strong>Contact:</strong><br />
+        📱{" "}
+        <a href="tel:+918639586785" style={{ color: "#0095f6" }}>
+          +91 8639586785
+        </a>
+        <br />
+        📧{" "}
+        <a href="mailto:kavyasrivenna222@gmail.com" style={{ color: "#0095f6" }}>
+          kavyasrivenna222@gmail.com
+        </a>
+        <br />
+        🔗{" "}
+        <a
+          href="https://github.com/Kavyasrivenna"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0095f6" }}
+        >
+          GitHub
+        </a>
+        <br />
+        🔗{" "}
+        <a
+          href="https://www.linkedin.com/in/kavyasri06"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0095f6" }}
+        >
+          LinkedIn
+        </a>
+      </p>
+    </div>
+  ),
 
-2. GDGC VNRVJIET Website  
-Built the official website for GDGC VNRVJIET with modern UI using React and styled-components.  
-🔗 GitHub: https://github.com/Kavyasrivenna/gdgc
+  Projects: (
+    <div style={{ fontSize: "1rem", lineHeight: "1.6", color: "#ccc" }}>
+      <p>
+        <strong>1. Device Driver Development (Linux Kernel, C)</strong><br />
+        Built a basic character device driver module demonstrating system-level interfacing in Linux.
+      </p>
 
-3. E-Commerce Website  
-Developed a complete frontend e-commerce UI using React.js, JavaScript, and Bootstrap.
+      <p>
+        <strong>2. CodePen Clone (HTML, CSS, JavaScript)</strong><br />
+        Online HTML/CSS/JS editor with live preview and syntax-aware editing.<br />
+        🔗{" "}
+        <a
+          href="https://github.com/Kavyasrivenna/codepen"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0095f6" }}
+        >
+          GitHub Repository
+        </a>
+      </p>
 
-4. Device Driver Development (Linux Kernel)  
-Built low-level device drivers in C for Linux OS to understand kernel programming and system interaction.
+      <p>
+        <strong>3. Portfolio Website (React.js)</strong><br />
+        Designed a dynamic personal portfolio website. Integrated GitHub repos and certifications.<br />
+        🔗{" "}
+        <a
+          href="https://github.com/Kavyasrivenna/portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0095f6" }}
+        >
+          GitHub Repository
+        </a>
+      </p>
 
-5. CodePen Mini Projects  
-A collection of creative frontend components made using HTML, CSS, and JavaScript.  
-- Expanding Cards: https://codepen.io/Kavyasri-Venna/pen/jEEzEqp  
-- FAQ Accordion: https://codepen.io/Kavyasri-Venna/pen/qBzMvmg  
-- Blurry Loading UI: https://codepen.io/Kavyasri-Venna/pen/bGPadXJ  
-- Split Landing Page: https://codepen.io/Kavyasri-Venna/pen/KKjZdVw  
-- Hidden Search Widget: https://codepen.io/Kavyasri-Venna/pen/NWZvvPy  
-- Sound Board Buttons: https://codepen.io/Kavyasri-Venna/pen/JjqbQBj
-`,
+      <p>
+        <strong>4. Tutly — EduTech Platform (Team Project)</strong><br />
+        Open-source LMS for student–teacher collaboration. Contributed to UI and module integration.<br />
+        🔗{" "}
+        <a
+          href="https://github.com/TutlyLabs/Tutly"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0095f6" }}
+        >
+          GitHub Repository
+        </a>
+      </p>
 
-  About: `
-Hello! I'm Kavya Sri Venna, a dedicated and enthusiastic Full Stack Developer and Computer Science undergraduate at VNR Vignana Jyothi Institute of Engineering and Technology (2023–2027).
-
-As a full-stack developer, I specialize in building scalable, user-friendly web applications using the MERN stack — MongoDB, Express.js, React.js, and Node.js. I'm passionate about combining elegant frontends with robust backend systems.
-
-My technical experience includes:
-- Developing an end-to-end E-Commerce platform using React, Bootstrap, and Node.js with MongoDB.
-- Cloning CodePen with live preview functionality using React and Vanilla JS.
-- Implementing device drivers in C for the Linux kernel to understand low-level system behavior.
-- Designing and consuming RESTful APIs, implementing authentication, and handling state management with Redux.
-
-Currently, I serve as a Web Development Mentor at VNRVJIET, supporting students in both frontend and backend development practices. I'm also an active contributor at GDGC VNRVJIET and the Microsoft Innovation Hub.
-
-Technical Skills:
-- Languages: Java, C++, C, JavaScript
-- Frontend: HTML, CSS, React.js, Bootstrap, React Native
-- Backend: Node.js, Express.js, MongoDB, REST APIs
-- Databases: MongoDB, SQL
-- Soft Skills: Leadership, Communication, Problem Solving, Teamwork, Adaptability
-
-Contact:
-GitHub: github.com/Kavyasrivenna  
-LinkedIn: linkedin.com/in/kavyasri06  
-Email: kavyasrivenna222@gmail.com
-`,
+      <p>
+        <strong>5. E-Commerce Website (React.js, Bootstrap)</strong><br />
+        Front-end for product listing, search, and filtering. Fully responsive design using Bootstrap.
+      </p>
+    </div>
+  ),
 
   Experience: {
     text: `
-Full Stack Mentor | Web Development  
-VNR Vignana Jyothi Institute of Engineering and Technology  
-Aug 2023 – Present
+Web Development Mentor | VNRVJIET  
+Aug 2023 – Present  
 
-As a Full Stack Web Development Mentor, I support fellow students in mastering both frontend and backend technologies including HTML, CSS, JavaScript, React.js, Node.js, and MongoDB.
+Mentoring juniors on web development fundamentals, full-stack tools, GitHub collaboration, and project development.  
 
-Responsibilities:
-- Conduct hands-on workshops on frontend frameworks (React.js) and backend development using Express.js.
-- Guide peers on building RESTful APIs, handling databases (MongoDB), and integrating backend with frontend.
-- Mentor on full project development lifecycle — planning, coding, deployment.
-- Provide one-on-one code reviews and feedback on MERN stack projects.
-
-My mentorship fosters real-world skills and builds confidence in deploying scalable full-stack applications.
+Responsibilities:  
+- Guiding peers in frontend (React.js), backend (Node.js, Express), and database (MongoDB) workflows.  
+- Conducting hands-on workshops and technical sessions.  
+- Providing one-on-one project mentorship and code reviews.  
+- Encouraging best practices in version control and deployment.
 `,
     image: mentorImage,
   },
 
   Education: `
 Bachelor of Technology in Computer Science and Engineering  
-VNR Vignana Jyothi Institute of Engineering & Technology, Hyderabad  
-Aug 2023 – Present • Currently Pursuing  
-Building a strong foundation in computer science with a focus on full-stack web development, data structures, and real-world software applications.
+VNR Vignana Jyothi Institute of Engineering & Technology  
+2023 – 2027  
 
-Intermediate (MPC Stream)  
-Sri Chaitanya Junior College, Hyderabad  
-Jul 2021 – Apr 2023 • Percentage: 94%  
-Excelled in mathematics and science, with consistent academic performance and strong analytical skills.
+Intermediate (MPC)  
+Sri Chaitanya Junior College  
+2021 – 2023  
 
 Secondary School Certificate (SSC)  
-SRM High School, Kodad  
-Jun 2020 – Apr 2021 • GPA: 10/10  
-Achieved academic excellence while actively participating in school-level science exhibitions and leadership activities.
+SRM High School, Suryapet  
+2020 – 2021
 `,
 
-  Certifications: "Certified in React, JavaScript, MongoDB, and more.",
+  // ✅ Certificates in Grid Layout
+  Certifications: (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+        gap: "1rem",
+        fontSize: "1rem",
+        color: "#ccc",
+      }}
+    >
+      {certificateList.map((cert, index) => (
+        <div
+          key={index}
+          style={{
+            backgroundColor: "#111",
+            padding: "1rem",
+            borderRadius: "8px",
+            border: "1px solid #333",
+          }}
+        >
+          <p style={{ marginBottom: "0.5rem", fontWeight: "bold" }}>
+            {cert.title}
+          </p>
+          <a
+            href={cert.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#0095f6" }}
+          >
+            View Certificate
+          </a>
+        </div>
+      ))}
+    </div>
+  ),
+
+  Achievements: (
+    <div style={{ fontSize: "1rem", lineHeight: "1.6", color: "#ccc" }}>
+      <p>
+        <strong>Infosys Springboard Pragati: Path to Future Program</strong><br />
+        Selected for Apr 2025 – Jul 2025 Cohort.
+      </p>
+
+      <p>
+        <strong>Leadership & Volunteering</strong><br />
+        - Volunteer at GDGC VNRVJIET: Built apps supporting campus tech initiatives and organized events.<br />
+        - Volunteer at Microsoft Innovation Hub: Assisted with technical workshops and guided juniors.
+      </p>
+
+      <p>
+        <strong>Competitions</strong><br />
+        Participated in hackathons, coding competitions, and tech events at the institute level.
+      </p>
+    </div>
+  ),
 
   "Soft Skills": `
-Soft Skills
-- Leadership: Spearheaded peer mentoring initiatives, helped organize workshops and technical events.
-- Communication: Strong verbal and written communication skills demonstrated through mentoring and team collaboration.
-- Teamwork: Successfully worked with peers on full-stack development projects and hackathons.
-- Adaptability: Quick to learn and apply new technologies; comfortable working under pressure in fast-paced environments.
-
-Leadership & Mentorship
-- Web Development Mentor at VNRVJIET: Mentored students in frontend and backend web development using the MERN stack.
-- Volunteer at GDGC VNRVJIET and Microsoft Innovation Hub: Contributed to tech sessions, peer guidance, and community development.
-
-Extracurricular Activities
-- Participated in institute-level hackathons and coding competitions.
-- Member of university tech communities.
-- Volunteered in college cultural fests and tech talks.
+- Leadership: Spearheaded peer mentoring initiatives and event organization.  
+- Teamwork: Collaborated on projects such as Tutly (EduTech platform) and hackathons.  
+- Communication: Strong verbal and written skills through mentoring and presentations.  
+- Problem Solving: Applied analytical thinking to debug, design, and optimize solutions.  
+- Time Management & Adaptability: Balanced academics, mentoring, and technical projects.
 `,
 };
 
@@ -144,14 +283,38 @@ const Profile = () => {
             height: isDesktop ? 120 : 80,
           }}
         />
-        <div style={{ marginLeft: isDesktop ? "2rem" : 0, marginTop: isDesktop ? 0 : "1rem", flex: 1 }}>
-          <h2 style={{ fontSize: isDesktop ? "1.8rem" : "1.2rem", marginBottom: "0.5rem" }}>
+        <div
+          style={{
+            marginLeft: isDesktop ? "2rem" : 0,
+            marginTop: isDesktop ? 0 : "1rem",
+            flex: 1,
+          }}
+        >
+          <h2
+            style={{
+              fontSize: isDesktop ? "1.8rem" : "1.2rem",
+              marginBottom: "0.5rem",
+            }}
+          >
             Kavya Sri Venna
           </h2>
-          <div style={{ display: "flex", gap: "1.5rem", fontSize: isDesktop ? "1.1rem" : "0.9rem", marginBottom: "1rem" }}>
-            <div><strong>0</strong> Posts</div>
-            <div><strong>{isFollowing ? 1 : 0}</strong> Followers</div>
-            <div><strong>0</strong> Following</div>
+          <div
+            style={{
+              display: "flex",
+              gap: "1.5rem",
+              fontSize: isDesktop ? "1.1rem" : "0.9rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <div>
+              <strong>0</strong> Posts
+            </div>
+            <div>
+              <strong>{isFollowing ? 1 : 0}</strong> Followers
+            </div>
+            <div>
+              <strong>0</strong> Following
+            </div>
           </div>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <button style={styles.editBtn}>Edit Profile</button>
@@ -191,26 +354,46 @@ const Profile = () => {
       {/* Tab Content */}
       <div style={styles.tabContent}>
         {typeof tabContents[activeTab] === "string" ? (
-          <p style={{ fontSize: "1rem", lineHeight: "1.6", textAlign: "justify", color: "#ccc", whiteSpace: "pre-wrap" }}>
+          <p
+            style={{
+              fontSize: "1rem",
+              lineHeight: "1.6",
+              textAlign: "justify",
+              color: "#ccc",
+              whiteSpace: "pre-wrap",
+            }}
+          >
             {tabContents[activeTab]}
           </p>
-        ) : (
+        ) : tabContents[activeTab].text ? (
           <div>
-            <p style={{ fontSize: "1rem", lineHeight: "1.6", textAlign: "justify", color: "#ccc", whiteSpace: "pre-wrap" }}>
+            <p
+              style={{
+                fontSize: "1rem",
+                lineHeight: "1.6",
+                textAlign: "justify",
+                color: "#ccc",
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {tabContents[activeTab].text}
             </p>
-            <img
-              src={tabContents[activeTab].image}
-              alt="Experience"
-              style={{
-                width: "100%",
-                maxWidth: 600,
-                marginTop: "1rem",
-                borderRadius: 10,
-                display: "block",
-              }}
-            />
+            {tabContents[activeTab].image && (
+              <img
+                src={tabContents[activeTab].image}
+                alt="Experience"
+                style={{
+                  width: "100%",
+                  maxWidth: 600,
+                  marginTop: "1rem",
+                  borderRadius: 10,
+                  display: "block",
+                }}
+              />
+            )}
           </div>
+        ) : (
+          tabContents[activeTab]
         )}
       </div>
     </div>
@@ -224,7 +407,7 @@ const styles = {
     backgroundColor: "#000",
     color: "#fff",
     minHeight: "100vh",
-    paddingBottom: "6rem", // prevents overlap with footer
+    paddingBottom: "6rem",
     fontFamily: "sans-serif",
   },
   header: {
