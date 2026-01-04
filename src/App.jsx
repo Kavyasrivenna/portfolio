@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar';
 import StoryNavigation from './components/StoryNavigation';
 import Home from './components/home';
 import About from './components/about';
@@ -9,24 +8,22 @@ import Education from './components/Education';
 import Experience from './components/Experience';
 import Certification from './components/Certification';
 import Projects from './components/Projects';
-import Contact from './components/Contact';
+import Contact from './components/contact';
 import Footer from './components/footer';
 import StoryCard from './components/storycard';
 import SearchBar from './components/SearchBar';
 import PortfolioGrid from './components/PortfolioGrid';
 import ReelsViewer from './components/ReelsViewer';
-import Profile from './components/Profile';
+import Profile from './components/profile'; // ✅ Import Profile
 
 function App() {
   const [showStory, setShowStory] = useState(false);
-  const [activePage, setActivePage] = useState('main'); 
-  // main | search | reels | profile
+  const [activePage, setActivePage] = useState('main'); // main | search | reels | profile
 
   const closeStory = () => setShowStory(false);
 
   return (
     <div style={{ backgroundColor: '#000', color: '#fff' }}>
-      
       {/* Navbar only on main page */}
       {activePage === 'main' && <Navbar />}
 
@@ -42,15 +39,13 @@ function App() {
             style={storyContainerStyle}
             onClick={(e) => e.stopPropagation()}
           >
-            <button onClick={closeStory} style={closeButtonStyle}>
-              ✕
-            </button>
+            <button onClick={closeStory} style={closeButtonStyle}>✕</button>
             <StoryCard />
           </div>
         </div>
       )}
 
-      {/* Page Content */}
+      {/* Route-based content */}
       {activePage === 'search' ? (
         <>
           <SearchBar />
@@ -59,7 +54,7 @@ function App() {
       ) : activePage === 'reels' ? (
         <ReelsViewer />
       ) : activePage === 'profile' ? (
-        <Profile />
+        <Profile /> // ✅ Renders your Instagram-style profile UI
       ) : (
         <>
           <Home />
@@ -73,19 +68,18 @@ function App() {
         </>
       )}
 
-      {/* Footer */}
+      {/* Footer always visible */}
       <Footer
         onNavigate={(page) => {
           setActivePage(page);
-          setShowStory(false);
+          setShowStory(false); // Hide story viewer if open
         }}
       />
     </div>
   );
 }
 
-/* ---------- Styles ---------- */
-
+// Styles for story overlay
 const overlayStyle = {
   position: 'fixed',
   top: 0,
