@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import Home from './sections/Home';
-import About from './sections/About';
-import Skills from './sections/Skills';
-import Projects from './sections/Projects';
-import Certificates from './sections/Certificates';
-import Experience from './sections/Experience';
-import Contact from './sections/Contact';
+
+// ✅ Correct imports (from components folder)
+import Home from './home';
+import About from './about';
+import Skills from './skills';
+import Projects from './Projects';
+import Certification from './Certification';
+import Experience from './Experience';
+import Contact from './Contact';
 
 const sections = [
   { name: 'home', component: <Home /> },
   { name: 'about', component: <About /> },
   { name: 'skills', component: <Skills /> },
   { name: 'projects', component: <Projects /> },
-  { name: 'certificates', component: <Certificates /> },
+  { name: 'certificates', component: <Certification /> },
   { name: 'experience', component: <Experience /> },
   { name: 'contact', component: <Contact /> },
 ];
