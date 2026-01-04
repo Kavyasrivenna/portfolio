@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
+
+// Layout components
 import Navbar from './components/navbar';
+import Footer from './components/footer';
+
+// Story / navigation
 import StoryNavigation from './components/StoryNavigation';
+import StoryCard from './components/storycard';
+
+// Main sections
 import Home from './components/home';
 import About from './components/about';
 import Skills from './components/skills';
@@ -8,26 +16,30 @@ import Education from './components/Education';
 import Experience from './components/Experience';
 import Certification from './components/Certification';
 import Projects from './components/Projects';
-import Contact from './components/contact';
-import Footer from './components/footer';
-import StoryCard from './components/storycard';
+import Contact from './components/Contact';
+
+// Search & reels
 import SearchBar from './components/SearchBar';
-import PortfolioGrid from './components/PortfolioGrid';
+import SearchGrid from './components/SearchGrid';
 import ReelsViewer from './components/ReelsViewer';
-import Profile from './components/profile'; // ✅ Import Profile
+
+// Profile
+import Profile from './components/Profile';
 
 function App() {
   const [showStory, setShowStory] = useState(false);
-  const [activePage, setActivePage] = useState('main'); // main | search | reels | profile
+  const [activePage, setActivePage] = useState('main'); 
+  // main | search | reels | profile
 
   const closeStory = () => setShowStory(false);
 
   return (
-    <div style={{ backgroundColor: '#000', color: '#fff' }}>
+    <div style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
+
       {/* Navbar only on main page */}
       {activePage === 'main' && <Navbar />}
 
-      {/* Story Navigation only on main page */}
+      {/* Story Navigation */}
       {activePage === 'main' && (
         <StoryNavigation onStoryClick={() => setShowStory(true)} />
       )}
@@ -45,16 +57,16 @@ function App() {
         </div>
       )}
 
-      {/* Route-based content */}
+      {/* Page Content */}
       {activePage === 'search' ? (
         <>
           <SearchBar />
-          <PortfolioGrid />
+          <SearchGrid />
         </>
       ) : activePage === 'reels' ? (
         <ReelsViewer />
       ) : activePage === 'profile' ? (
-        <Profile /> // ✅ Renders your Instagram-style profile UI
+        <Profile />
       ) : (
         <>
           <Home />
@@ -68,18 +80,19 @@ function App() {
         </>
       )}
 
-      {/* Footer always visible */}
+      {/* Footer */}
       <Footer
         onNavigate={(page) => {
           setActivePage(page);
-          setShowStory(false); // Hide story viewer if open
+          setShowStory(false);
         }}
       />
     </div>
   );
 }
 
-// Styles for story overlay
+/* ---------- Styles ---------- */
+
 const overlayStyle = {
   position: 'fixed',
   top: 0,
