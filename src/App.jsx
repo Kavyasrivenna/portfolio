@@ -19,12 +19,14 @@ import Profile from './components/Profile';
 
 function App() {
   const [showStory, setShowStory] = useState(false);
-  const [activePage, setActivePage] = useState('main'); // main | search | reels | profile
+  const [activePage, setActivePage] = useState('main'); 
+  // main | search | reels | profile
 
   const closeStory = () => setShowStory(false);
 
   return (
     <div style={{ backgroundColor: '#000', color: '#fff' }}>
+      
       {/* Navbar only on main page */}
       {activePage === 'main' && <Navbar />}
 
@@ -40,13 +42,15 @@ function App() {
             style={storyContainerStyle}
             onClick={(e) => e.stopPropagation()}
           >
-            <button onClick={closeStory} style={closeButtonStyle}>✕</button>
+            <button onClick={closeStory} style={closeButtonStyle}>
+              ✕
+            </button>
             <StoryCard />
           </div>
         </div>
       )}
 
-      {/* Page content */}
+      {/* Page Content */}
       {activePage === 'search' ? (
         <>
           <SearchBar />
@@ -80,7 +84,8 @@ function App() {
   );
 }
 
-/* Styles */
+/* ---------- Styles ---------- */
+
 const overlayStyle = {
   position: 'fixed',
   top: 0,
