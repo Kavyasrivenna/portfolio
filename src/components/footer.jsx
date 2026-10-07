@@ -1,0 +1,100 @@
+import React from 'react';
+import { FaHome, FaSearch, FaPlusSquare, FaUser } from 'react-icons/fa';
+import { BsCameraReelsFill } from 'react-icons/bs';
+
+const Footer = ({ onNavigate, onOpenQuickAction, activePage = 'main' }) => {
+  return (
+    <footer
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: '#000',
+        padding: '0.6rem 1rem',
+        borderTop: '1px solid #222',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        zIndex: 1000,
+      }}
+    >
+      <button
+        onClick={() => onNavigate('main')}
+        style={{
+          ...navItemStyle,
+          color: activePage === 'main' ? '#ec4899' : '#fff',
+        }}
+        aria-label="Home"
+      >
+        <FaHome size={22} />
+        <span style={labelStyle}>Home</span>
+      </button>
+
+      <button
+        onClick={() => onNavigate('search')}
+        style={{
+          ...navItemStyle,
+          color: activePage === 'search' ? '#ec4899' : '#fff',
+        }}
+        aria-label="Search"
+      >
+        <FaSearch size={22} />
+        <span style={labelStyle}>Search</span>
+      </button>
+
+      <button
+        onClick={onOpenQuickAction}
+        style={{
+          ...navItemStyle,
+          color: '#fff',
+        }}
+        aria-label="Quick Actions"
+      >
+        <FaPlusSquare size={24} color="#ec4899" />
+        <span style={{ ...labelStyle, color: '#ec4899', fontWeight: 'bold' }}>Quick</span>
+      </button>
+
+      <button
+        onClick={() => onNavigate('reels')}
+        style={{
+          ...navItemStyle,
+          color: activePage === 'reels' ? '#ec4899' : '#fff',
+        }}
+        aria-label="Reels"
+      >
+        <BsCameraReelsFill size={22} />
+        <span style={labelStyle}>Reels</span>
+      </button>
+
+      <button
+        onClick={() => onNavigate('profile')}
+        style={{
+          ...navItemStyle,
+          color: activePage === 'profile' ? '#ec4899' : '#fff',
+        }}
+        aria-label="Profile"
+      >
+        <FaUser size={22} />
+        <span style={labelStyle}>Profile</span>
+      </button>
+    </footer>
+  );
+};
+
+const navItemStyle = {
+  color: '#fff',
+  background: 'none',
+  border: 'none',
+  textDecoration: 'none',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  cursor: 'pointer',
+};
+
+const labelStyle = {
+  fontSize: '10px',
+  marginTop: '4px',
+};
+
+export default Footer;
